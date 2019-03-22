@@ -49,6 +49,11 @@ public abstract class AbstractInternalSqlDatabaseAndConfigMapStrategy extends Ab
         cmd.execCommand("oc", "delete", "all", "-l", "app=" + DB_APP_NAME);
     }
 
+    @Override
+    public void setup() throws IOException {
+        cmd.execCommand("oc", "delete", "deployment,deploymentconfig,pod,replicaset,replicationcontroller,route,service,template,configmap", "--all");
+    }
+
     protected static Map<String, String> mapOf(String key1, String value1,
                                                String key2, String value2,
                                                String key3, String value3) {

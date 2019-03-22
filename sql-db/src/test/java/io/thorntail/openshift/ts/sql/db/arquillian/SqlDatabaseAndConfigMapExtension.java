@@ -27,6 +27,12 @@ public class SqlDatabaseAndConfigMapExtension implements LoadableExtension {
         // in Arquillian Cube, because the database must be deployed sooner / undeployed after the app
         // (which is deployed/undeployed using @OpenShiftResource)
 
+        public void setup(@Observes(precedence = 1001) BeforeClass event) throws Exception {
+            SqlDatabaseAndConfigMapStrategy strategy = strategy(event);
+            log.info("Setting up " + strategy.getClass().getName());
+            strategy.setup();
+        }
+
         public void deploy(@Observes(precedence = 1000) BeforeClass event) throws Exception {
             SqlDatabaseAndConfigMapStrategy strategy = strategy(event);
             log.info("Deploying " + strategy.getClass().getName());
